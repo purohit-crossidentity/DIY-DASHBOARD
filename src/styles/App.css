@@ -113,3 +113,32 @@
   color: var(--primary-dark);
   border: 1px solid var(--gray-200);
 }
+
+/* Server/Connection Error Title - Orange instead of red */
+.app-error h2.error-server {
+  color: #e67e22;
+}
+
+/* Retry Button */
+.retry-button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.retry-button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.retry-button:active {
+  transform: translateY(0);
+}

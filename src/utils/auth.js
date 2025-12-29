@@ -41,6 +41,7 @@ function isTokenExpired(token) {
 
 /**
  * Generate JWT token from backend
+ * Returns { success: true, data: {...} } or { success: false, error: 'type', message: '...' }
  */
 async function generateToken(tenantCode, subtenantCode) {
   try {
@@ -56,17 +57,38 @@ async function generateToken(tenantCode, subtenantCode) {
 
     if (result.success) {
       return {
-        token: result.data.token,
-        tenantId: result.data.tenant,
-        subtenantId: result.data.subtenant
+        success: true,
+        data: {
+          token: result.data.token,
+          tenantId: result.data.tenant,
+          subtenantId: result.data.subtenant
+        }
       };
     } else {
       console.error('Failed to generate token:', result.message);
-      return null;
+      return {
+        success: false,
+        error: 'auth_failed',
+        message: result.message || 'Invalid tenant or subtenant credentials.'
+      };
     }
   } catch (error) {
     console.error('Error generating token:', error);
-    return null;
+
+    // Check if it's a network error (server not running)
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      return {
+        success: false,
+        error: 'server_unavailable',
+        message: 'Unable to connect to the server. Please ensure the server is running.'
+      };
+    }
+
+    return {
+      success: false,
+      error: 'network_error',
+      message: 'A network error occurred. Please check your connection and try again.'
+    };
   }
 }
 
@@ -120,6 +142,7 @@ export async function refreshAuthToken() {
 /**
  * Initialize auth from URL parameters (STRICT MODE)
  * Requires tenant and subtenant in URL - no localStorage fallback
+ * Returns { success: true, data: {...} } or { success: false, error: 'type', message: '...' }
  */
 export async function initializeAuthFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -131,7 +154,11 @@ export async function initializeAuthFromURL() {
     console.warn('Tenant and subtenant required in URL');
     console.warn('Please access with ?tenant=<code>&subtenant=<code>');
     clearAuth();  // Clear any cached credentials
-    return null;
+    return {
+      success: false,
+      error: 'missing_params',
+      message: 'Please provide valid tenant and subtenant parameters in the URL.'
+    };
   }
 
   // Check if cached token matches URL params and is still valid
@@ -145,9 +172,12 @@ export async function initializeAuthFromURL() {
       const storedSubtenantId = localStorage.getItem('subtenant_id');
       console.log('Using cached token (still valid)');
       return {
-        tenant: parseInt(storedTenantId),
-        subtenant: parseInt(storedSubtenantId),
-        token: storedToken
+        success: true,
+        data: {
+          tenant: parseInt(storedTenantId),
+          subtenant: parseInt(storedSubtenantId),
+          token: storedToken
+        }
       };
     } else {
       console.log('Cached token expired, generating new one...');
@@ -157,25 +187,28 @@ export async function initializeAuthFromURL() {
   // Generate new token
   const result = await generateToken(tenant, subtenant);
 
-  if (result) {
+  if (result.success) {
     storeAuthData({
-      token: result.token,
-      tenantId: result.tenantId,
-      subtenantId: result.subtenantId,
+      token: result.data.token,
+      tenantId: result.data.tenantId,
+      subtenantId: result.data.subtenantId,
       tenantCode: tenant,
       subtenantCode: subtenant
     });
 
     console.log('New token generated and stored');
     return {
-      tenant: result.tenantId,
-      subtenant: result.subtenantId,
-      token: result.token
+      success: true,
+      data: {
+        tenant: result.data.tenantId,
+        subtenant: result.data.subtenantId,
+        token: result.data.token
+      }
     };
   }
 
-  console.error('Failed to generate token');
-  return null;
+  console.error('Failed to generate token:', result.message);
+  return result;  // Return the error object from generateToken
 }
 
 /**

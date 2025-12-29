@@ -18,17 +18,23 @@ function App() {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const authData = await initializeAuthFromURL();
+        const result = await initializeAuthFromURL();
 
-        if (authData) {
+        if (result.success) {
           setIsAuthenticated(true);
-          console.log('Authenticated for tenant:', authData.tenant, 'subtenant:', authData.subtenant);
+          console.log('Authenticated for tenant:', result.data.tenant, 'subtenant:', result.data.subtenant);
         } else {
-          setAuthError('Authentication failed. Please provide valid tenant and subtenant parameters.');
+          setAuthError({
+            type: result.error,
+            message: result.message
+          });
         }
       } catch (error) {
         console.error('Auth initialization error:', error);
-        setAuthError('Authentication error occurred.');
+        setAuthError({
+          type: 'unknown',
+          message: 'An unexpected error occurred. Please try again.'
+        });
       } finally {
         setIsLoading(false);
       }
@@ -47,13 +53,43 @@ function App() {
   }
 
   if (authError) {
+    const getErrorTitle = () => {
+      switch (authError.type) {
+        case 'server_unavailable':
+          return 'Server Unavailable';
+        case 'network_error':
+          return 'Connection Error';
+        case 'missing_params':
+          return 'Authentication Required';
+        case 'auth_failed':
+          return 'Authentication Failed';
+        default:
+          return 'Error';
+      }
+    };
+
+    const handleRetry = () => {
+      setAuthError(null);
+      setIsLoading(true);
+      window.location.reload();
+    };
+
     return (
       <div className="app-error">
-        <h2>Authentication Required</h2>
-        <p>{authError}</p>
-        <p className="hint">
-          Access URL format: <code>?tenant=CODE&subtenant=CODE</code>
-        </p>
+        <h2 className={authError.type === 'server_unavailable' || authError.type === 'network_error' ? 'error-server' : ''}>
+          {getErrorTitle()}
+        </h2>
+        <p>{authError.message}</p>
+        {authError.type === 'missing_params' && (
+          <p className="hint">
+            Access URL format: <code>?tenant=CODE&subtenant=CODE</code>
+          </p>
+        )}
+        {(authError.type === 'server_unavailable' || authError.type === 'network_error') && (
+          <button className="retry-button" onClick={handleRetry}>
+            Retry Connection
+          </button>
+        )}
       </div>
     );
   }
