@@ -1,0 +1,528 @@
+/**
+ * AddDashboardModal.css - Unique Glass Morphism Design
+ *
+ * Features:
+ * - Glass morphism modal
+ * - Animated gradient header
+ * - Smooth form animations
+ * - Floating widget list
+ */
+
+/* ===========================================
+   MODAL CONTAINER - GLASS MORPHISM
+   =========================================== */
+.add-dashboard-modal {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 28px;
+  width: 90%;
+  max-width: 550px;
+  max-height: 90vh;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2),
+              0 0 40px rgba(204, 204, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  animation: modalSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@keyframes modalSlideUp {
+  from {
+    transform: translateY(40px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===========================================
+   HEADER - ANIMATED GRADIENT
+   =========================================== */
+.add-dashboard-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 28px;
+  background: linear-gradient(135deg, #9999FF 0%, #AAAAF8 50%, #8888EE 100%);
+  background-size: 200% 200%;
+  animation: gradientMove 4s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes gradientMove {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Subtle shimmer effect */
+.add-dashboard-modal .modal-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.add-dashboard-modal .modal-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.add-dashboard-modal .close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--white);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.add-dashboard-modal .close-btn:hover {
+  background: #ef4444;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.add-dashboard-modal .close-btn:active {
+  transform: scale(0.95);
+}
+
+/* ===========================================
+   FORM STYLES
+   =========================================== */
+.add-dashboard-modal form {
+  padding: 28px;
+  background: transparent;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 24px;
+  animation: fadeInField 0.4s ease-out;
+  animation-fill-mode: both;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.15s; }
+.form-group:nth-child(3) { animation-delay: 0.2s; }
+
+@keyframes fadeInField {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 14px;
+}
+
+.required {
+  color: var(--error);
+  margin-left: 4px;
+}
+
+/* ===========================================
+   INPUTS - MODERN STYLE
+   =========================================== */
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid rgba(204, 204, 255, 0.2);
+  border-radius: 14px;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--text-dark);
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.form-group input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(204, 204, 255, 0.15),
+              0 8px 20px rgba(204, 204, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.form-group input[type="text"]::placeholder {
+  color: var(--gray-400);
+}
+
+.form-group input.error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+/* ===========================================
+   ERROR MESSAGE
+   =========================================== */
+.error-message {
+  display: block;
+  color: var(--error);
+  font-size: 13px;
+  margin-top: 8px;
+  font-weight: 500;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* ===========================================
+   SUBMIT ERROR
+   =========================================== */
+.submit-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #b91c1c;
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-left: 4px solid var(--error);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================================
+   WIDGET LIST - FLOATING CARDS
+   =========================================== */
+.widget-list {
+  max-height: 280px;
+  overflow-y: auto;
+  border: 2px solid rgba(204, 204, 255, 0.15);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 8px;
+}
+
+.widget-item {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.widget-item:last-child {
+  margin-bottom: 0;
+}
+
+.widget-item:hover {
+  background: rgba(204, 204, 255, 0.15);
+  border-color: rgba(204, 204, 255, 0.3);
+  transform: translateX(4px);
+}
+
+.widget-item.selected {
+  background: rgba(204, 204, 255, 0.2);
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(204, 204, 255, 0.15);
+}
+
+.widget-item input[type="checkbox"] {
+  margin-right: 14px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+}
+
+.widget-item span {
+  color: var(--text-dark);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.widget-item.custom span {
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.no-widgets {
+  padding: 30px;
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ===========================================
+   MODAL ACTIONS - PILL BUTTONS
+   =========================================== */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  padding: 20px 28px;
+  background: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid rgba(204, 204, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.modal-actions .btn-cancel {
+  background: transparent;
+  color: var(--text-dark);
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid var(--gray-300);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-actions .btn-cancel:hover {
+  background: var(--gray-100);
+  border-color: var(--gray-400);
+  transform: translateY(-2px);
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #9999FF 0%, #8888EE 100%);
+  color: #ffffff;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(153, 153, 255, 0.35);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn-submit:hover::before {
+  left: 100%;
+}
+
+.btn-submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(153, 153, 255, 0.5);
+  background: linear-gradient(135deg, #AAAAF8 0%, #9999FF 100%);
+}
+
+.btn-submit:active {
+  transform: translateY(-1px);
+}
+
+.btn-submit:disabled {
+  background: var(--gray-300);
+  color: var(--gray-500);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn-submit:disabled:hover {
+  transform: none;
+}
+
+.btn-submit:disabled::before {
+  display: none;
+}
+
+/* ===========================================
+   SCROLLBAR
+   =========================================== */
+.add-dashboard-modal form::-webkit-scrollbar,
+.widget-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.add-dashboard-modal form::-webkit-scrollbar-track,
+.widget-list::-webkit-scrollbar-track {
+  background: rgba(204, 204, 255, 0.05);
+  border-radius: 10px;
+}
+
+.add-dashboard-modal form::-webkit-scrollbar-thumb,
+.widget-list::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+.add-dashboard-modal form::-webkit-scrollbar-thumb:hover,
+.widget-list::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* ===========================================
+   RESPONSIVE STYLES
+   =========================================== */
+@media (max-width: 768px) {
+  .add-dashboard-modal {
+    width: 95%;
+    max-height: 85vh;
+    border-radius: 24px;
+  }
+
+  .add-dashboard-modal .modal-header {
+    padding: 18px 22px;
+  }
+
+  .add-dashboard-modal .modal-header h2 {
+    font-size: 20px;
+  }
+
+  .add-dashboard-modal form {
+    padding: 22px;
+  }
+
+  .form-group input[type="text"] {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .widget-list {
+    max-height: 220px;
+  }
+
+  .widget-item {
+    padding: 12px 14px;
+  }
+
+  .modal-actions {
+    padding: 18px 22px;
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .modal-actions .btn-cancel,
+  .btn-submit {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-dashboard-modal {
+    width: 98%;
+    border-radius: 20px;
+  }
+
+  .add-dashboard-modal .modal-header {
+    padding: 16px 18px;
+  }
+
+  .add-dashboard-modal .modal-header h2 {
+    font-size: 18px;
+  }
+
+  .add-dashboard-modal .close-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+
+  .add-dashboard-modal form {
+    padding: 18px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group input[type="text"] {
+    padding: 12px 14px;
+    font-size: 14px;
+    border-radius: 12px;
+  }
+
+  .widget-list {
+    max-height: 180px;
+    border-radius: 12px;
+  }
+
+  .widget-item {
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .widget-item span {
+    font-size: 13px;
+  }
+
+  .modal-actions {
+    padding: 16px 18px;
+  }
+
+  .modal-actions .btn-cancel,
+  .btn-submit {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}

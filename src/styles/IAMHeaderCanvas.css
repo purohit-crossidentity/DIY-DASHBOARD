@@ -1,0 +1,137 @@
+/**
+ * IAMHeaderCanvas.css - Styles for the Canvas-based IAM Header
+ *
+ * Features:
+ * - Full-width animated canvas header
+ * - Glassmorphism overlay for text readability
+ * - Responsive design
+ */
+
+/* ===========================================
+   HEADER CONTAINER
+   =========================================== */
+.iam-header {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(153, 153, 255, 0.15),
+              0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* ===========================================
+   CANVAS BACKGROUND
+   =========================================== */
+.iam-header-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    #ffffff 0%,
+    #E6E6FA 25%,
+    #CCCCFF 60%,
+    #E6E6FA 100%);
+}
+
+/* ===========================================
+   OVERLAY (minimal)
+   =========================================== */
+.header-overlay {
+  display: none;
+}
+
+/* ===========================================
+   HEADER CONTENT - LEFT ALIGNED
+   =========================================== */
+.iam-header-content {
+  position: absolute;
+  top: 50%;
+  left: 24px;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.iam-header-content h1 {
+  font-size: 38px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #1e293b 0%, #475569 50%, #1e293b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  letter-spacing: -0.5px;
+  position: relative;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding-bottom: 8px;
+}
+
+.iam-header-content h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 70px;
+  height: 4px;
+  background: linear-gradient(90deg, #9999FF 0%, #BBBBFF 60%, transparent 100%);
+  border-radius: 2px;
+}
+
+/* ===========================================
+   DECORATIVE ELEMENTS (disabled for clean look)
+   =========================================== */
+.iam-header::before,
+.iam-header::after {
+  display: none;
+}
+
+/* ===========================================
+   RESPONSIVE STYLES
+   =========================================== */
+@media (max-width: 768px) {
+  .iam-header {
+    height: 120px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .iam-header-content {
+    left: 20px;
+  }
+
+  .iam-header-content h1 {
+    font-size: 28px;
+    padding-bottom: 6px;
+  }
+
+  .iam-header-content h1::after {
+    width: 50px;
+    height: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .iam-header {
+    height: 100px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+
+  .iam-header-content {
+    left: 16px;
+  }
+
+  .iam-header-content h1 {
+    font-size: 24px;
+    padding-bottom: 5px;
+  }
+
+  .iam-header-content h1::after {
+    width: 40px;
+    height: 2px;
+  }
+}

@@ -1,0 +1,494 @@
+/**
+ * CustomDashboardPage.css - Unique Design with Animations
+ *
+ * Features:
+ * - Animated header with wave effect
+ * - Glass morphism cards
+ * - Floating particles background
+ * - Modern button animations
+ * - Unique table design
+ */
+
+/* ============================================
+   PAGE CONTAINER
+   ============================================ */
+.custom-dashboard-page {
+  padding: 24px 28px;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* ============================================
+   ACTION BUTTONS CONTAINER
+   ============================================ */
+.dashboard-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+
+/* ============================================
+   BUTTON STYLES - NEON GLOW EFFECT
+   ============================================ */
+.btn {
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+/* Add Button - Soft Purple Glow */
+.btn-add {
+  background: linear-gradient(135deg, #9999FF 0%, #8888EE 100%);
+  box-shadow: 0 4px 20px rgba(153, 153, 255, 0.35);
+  color: #ffffff;
+}
+
+.btn-add:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(153, 153, 255, 0.5),
+              0 0 20px rgba(153, 153, 255, 0.3);
+  background: linear-gradient(135deg, #AAAAF8 0%, #9999FF 100%);
+}
+
+.btn-add:active {
+  transform: translateY(-1px) scale(1);
+}
+
+/* Delete Button - Red Glow */
+.btn-delete {
+  background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+}
+
+.btn-delete:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.6),
+              0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+.btn-delete:active {
+  transform: translateY(-1px) scale(1);
+}
+
+.btn-delete:disabled {
+  background: var(--gray-400);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn-delete:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============================================
+   ERROR CONTAINER - FLOATING CARD
+   ============================================ */
+.error-container {
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  background: rgba(239, 68, 68, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-left: 4px solid var(--error);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.15);
+  animation: slideDown 0.3s ease-out;
+  color: #b91c1c;
+}
+
+.error-container button {
+  background: rgba(239, 68, 68, 0.2);
+  border: none;
+  color: var(--error);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.error-container button:hover {
+  background: var(--error);
+  color: white;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   LOADING STATE - PULSE ANIMATION
+   ============================================ */
+.loading {
+  text-align: center;
+  padding: 60px;
+  color: var(--primary-dark);
+  font-size: 18px;
+  font-weight: 500;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   TABLE CONTAINER - GLASS MORPHISM
+   ============================================ */
+.dashboard-table-container {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(204, 204, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   TABLE STYLES
+   ============================================ */
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Table Header - Soft Gradient */
+.dashboard-table thead {
+  background: linear-gradient(135deg, #9999FF 0%, #8888EE 100%);
+}
+
+.dashboard-table th {
+  padding: 18px 24px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.dashboard-table th:first-child {
+  width: 70px;
+  text-align: center;
+}
+
+/* Table Body - Hover Effects */
+.dashboard-table tbody tr {
+  border-bottom: 1px solid rgba(204, 204, 255, 0.1);
+  transition: all 0.3s ease;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dashboard-table tbody tr:hover {
+  background: rgba(204, 204, 255, 0.1);
+  transform: scale(1.005);
+}
+
+.dashboard-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.dashboard-table tbody tr.selected {
+  background: rgba(204, 204, 255, 0.2);
+}
+
+.dashboard-table td {
+  padding: 18px 24px;
+  color: var(--text-dark);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.dashboard-table td:first-child {
+  text-align: center;
+}
+
+/* Custom Checkbox */
+.dashboard-table input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--primary);
+  border-radius: 4px;
+}
+
+/* Empty State */
+.no-data {
+  text-align: center;
+  padding: 60px 20px !important;
+  color: var(--text-muted);
+  font-size: 16px;
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* ============================================
+   MODAL OVERLAY - BLUR BACKDROP
+   ============================================ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ============================================
+   CONFIRMATION MODAL - GLASS CARD
+   ============================================ */
+.confirm-modal {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 36px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: modalPop 0.3s ease-out;
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.confirm-modal h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 16px 0;
+}
+
+.confirm-modal p {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin: 0 0 28px 0;
+  line-height: 1.6;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.btn-cancel {
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 50px;
+  border: 2px solid var(--gray-300);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: transparent;
+  color: var(--text-dark);
+}
+
+.btn-cancel:hover {
+  background: var(--gray-100);
+  border-color: var(--gray-400);
+  transform: translateY(-2px);
+}
+
+.btn-confirm-delete {
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
+  color: var(--white);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.btn-confirm-delete:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
+}
+
+/* ============================================
+   RESPONSIVE STYLES
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .custom-dashboard-page {
+    padding: 16px 20px;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 14px 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-dashboard-page {
+    padding: 14px 16px;
+  }
+
+  .dashboard-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+
+  .error-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .dashboard-table-container {
+    border-radius: 16px;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .dashboard-table th {
+    font-size: 11px;
+  }
+
+  .confirm-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .btn-cancel,
+  .btn-confirm-delete {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-dashboard-page {
+    padding: 12px;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+
+  .error-container {
+    padding: 10px 12px;
+  }
+
+  .dashboard-table-container {
+    overflow-x: auto;
+  }
+
+  .dashboard-table {
+    min-width: 500px;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .confirm-modal {
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+
+  .confirm-modal h3 {
+    font-size: 18px;
+  }
+
+  .confirm-modal p {
+    font-size: 14px;
+  }
+}
