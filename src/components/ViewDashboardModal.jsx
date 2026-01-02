@@ -10,13 +10,12 @@
 import { useState, useEffect, useRef } from 'react';
 import '../styles/ViewDashboardModal.css';
 
-const ViewDashboardModal = ({ dashboard, predefinedWidgets, customWidgets, allUsers, onClose, onUpdate }) => {
+const ViewDashboardModal = ({ dashboard, customWidgets, allUsers, onClose, onUpdate }) => {
   const [activeTab, setActiveTab] = useState('general');
   const [formData, setFormData] = useState({
     dashboardName: '',
     dashboardDesc: '',
-    selectedPredefinedWidgets: [],
-    customWidgetIds: [],
+    selectedWidgetIds: [],
     users: []
   });
   const [errors, setErrors] = useState({});
@@ -45,24 +44,15 @@ const ViewDashboardModal = ({ dashboard, predefinedWidgets, customWidgets, allUs
   // Initialize form data from dashboard
   useEffect(() => {
     if (dashboard) {
-      // Parse widget_cfg to get selected predefined widgets
-      let selectedPredefined = [];
-      if (dashboard.widgetCfg && Array.isArray(dashboard.widgetCfg)) {
-        selectedPredefined = dashboard.widgetCfg
-          .filter(w => w.status === 'true' || w.status === true)
-          .map(w => w.dwname);
-      }
-
-      // Get custom widget IDs
-      const customIds = dashboard.customWidgets
+      // Get widget IDs from customWidgets
+      const widgetIds = dashboard.customWidgets
         ? dashboard.customWidgets.map(w => w.id)
         : [];
 
       setFormData({
         dashboardName: dashboard.dashboard_name || '',
         dashboardDesc: dashboard.dashboard_desc || '',
-        selectedPredefinedWidgets: selectedPredefined,
-        customWidgetIds: customIds,
+        selectedWidgetIds: widgetIds,
         users: dashboard.users || []
       });
     }
@@ -78,21 +68,12 @@ const ViewDashboardModal = ({ dashboard, predefinedWidgets, customWidgets, allUs
   };
 
   // Widgets tab handlers
-  const handlePredefinedWidgetToggle = (widgetName) => {
+  const handleWidgetToggle = (widgetId) => {
     setFormData(prev => ({
       ...prev,
-      selectedPredefinedWidgets: prev.selectedPredefinedWidgets.includes(widgetName)
-        ? prev.selectedPredefinedWidgets.filter(name => name !== widgetName)
-        : [...prev.selectedPredefinedWidgets, widgetName]
-    }));
-  };
-
-  const handleCustomWidgetToggle = (widgetId) => {
-    setFormData(prev => ({
-      ...prev,
-      customWidgetIds: prev.customWidgetIds.includes(widgetId)
-        ? prev.customWidgetIds.filter(id => id !== widgetId)
-        : [...prev.customWidgetIds, widgetId]
+      selectedWidgetIds: prev.selectedWidgetIds.includes(widgetId)
+        ? prev.selectedWidgetIds.filter(id => id !== widgetId)
+        : [...prev.selectedWidgetIds, widgetId]
     }));
   };
 
@@ -161,8 +142,7 @@ const ViewDashboardModal = ({ dashboard, predefinedWidgets, customWidgets, allUs
     const result = await onUpdate(dashboard.id, {
       dashboardName: formData.dashboardName.trim(),
       dashboardDesc: formData.dashboardDesc.trim(),
-      selectedPredefinedWidgets: formData.selectedPredefinedWidgets,
-      customWidgetIds: formData.customWidgetIds,
+      widgetIds: formData.selectedWidgetIds,
       users: formData.users.map(u => u.userId)
     });
 
@@ -204,59 +184,40 @@ const ViewDashboardModal = ({ dashboard, predefinedWidgets, customWidgets, allUs
   // Render Widgets Tab
   const renderWidgetsTab = () => (
     <div className="tab-content">
-      <table className="widgets-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Widget</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* Predefined Widgets */}
-          {predefinedWidgets.map(widgetName => (
-            <tr
-              key={widgetName}
-              className={formData.selectedPredefinedWidgets.includes(widgetName) ? 'selected' : ''}
-              onClick={() => handlePredefinedWidgetToggle(widgetName)}
-            >
-              <td>
-                <input
-                  type="checkbox"
-                  checked={formData.selectedPredefinedWidgets.includes(widgetName)}
-                  onChange={() => {}}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePredefinedWidgetToggle(widgetName);
-                  }}
-                />
-              </td>
-              <td>{widgetName}</td>
+      {customWidgets.length === 0 ? (
+        <p className="no-widgets">No widgets available. Please configure widgets in the Custom Widgets layer first.</p>
+      ) : (
+        <table className="widgets-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Widget</th>
             </tr>
-          ))}
-
-          {/* Custom Widgets */}
-          {customWidgets.map(widget => (
-            <tr
-              key={`custom-${widget.id}`}
-              className={formData.customWidgetIds.includes(widget.id) ? 'selected' : ''}
-              onClick={() => handleCustomWidgetToggle(widget.id)}
-            >
-              <td>
-                <input
-                  type="checkbox"
-                  checked={formData.customWidgetIds.includes(widget.id)}
-                  onChange={() => {}}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCustomWidgetToggle(widget.id);
-                  }}
-                />
-              </td>
-              <td>{widget.widget_name} (Custom)</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {customWidgets.map(widget => (
+              <tr
+                key={widget.id}
+                className={formData.selectedWidgetIds.includes(widget.id) ? 'selected' : ''}
+                onClick={() => handleWidgetToggle(widget.id)}
+              >
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={formData.selectedWidgetIds.includes(widget.id)}
+                    onChange={() => {}}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleWidgetToggle(widget.id);
+                    }}
+                  />
+                </td>
+                <td>{widget.widget_name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 

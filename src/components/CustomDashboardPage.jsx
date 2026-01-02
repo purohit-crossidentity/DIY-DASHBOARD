@@ -16,8 +16,7 @@ const API_BASE_URL = 'http://localhost:5001/api';
 
 const CustomDashboardPage = () => {
   const [dashboards, setDashboards] = useState([]);
-  const [predefinedWidgets, setPredefinedWidgets] = useState([]);
-  const [customWidgets, setCustomWidgets] = useState([]);
+  const [widgets, setWidgets] = useState([]);
   const [users, setUsers] = useState([]);
   const [selectedDashboards, setSelectedDashboards] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,30 +58,8 @@ const CustomDashboardPage = () => {
     }
   }, []);
 
-  // Fetch predefined widgets
-  const fetchPredefinedWidgets = useCallback(async () => {
-    try {
-      const token = await getValidAuthToken();
-      const response = await fetch(`${API_BASE_URL}/dashboards/widgets/predefined`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        if (result.success) {
-          setPredefinedWidgets(result.data);
-        }
-      }
-    } catch (err) {
-      console.error('Error fetching predefined widgets:', err);
-    }
-  }, []);
-
-  // Fetch custom widgets
-  const fetchCustomWidgets = useCallback(async () => {
+  // Fetch widgets from Layer 1 (idx2_dashboard_widget)
+  const fetchWidgets = useCallback(async () => {
     try {
       const token = await getValidAuthToken();
       const response = await fetch(`${API_BASE_URL}/dashboards/widgets/all`, {
@@ -95,11 +72,11 @@ const CustomDashboardPage = () => {
       if (response.ok) {
         const result = await response.json();
         if (result.success) {
-          setCustomWidgets(result.data);
+          setWidgets(result.data);
         }
       }
     } catch (err) {
-      console.error('Error fetching custom widgets:', err);
+      console.error('Error fetching widgets:', err);
     }
   }, []);
 
@@ -135,8 +112,7 @@ const CustomDashboardPage = () => {
       // Fetch all data in parallel - token mutex prevents race condition
       await Promise.all([
         fetchDashboards(),
-        fetchPredefinedWidgets(),
-        fetchCustomWidgets(),
+        fetchWidgets(),
         fetchUsers()
       ]);
     };
@@ -146,7 +122,7 @@ const CustomDashboardPage = () => {
     return () => {
       isMounted = false;
     };
-  }, [fetchDashboards, fetchPredefinedWidgets, fetchCustomWidgets, fetchUsers]);
+  }, [fetchDashboards, fetchWidgets, fetchUsers]);
 
   // Create new dashboard
   const handleCreateDashboard = async (dashboardData) => {
@@ -362,8 +338,7 @@ const CustomDashboardPage = () => {
       {/* Add Dashboard Modal */}
       {isAddModalOpen && (
         <AddDashboardModal
-          predefinedWidgets={predefinedWidgets}
-          customWidgets={customWidgets}
+          customWidgets={widgets}
           onClose={() => setIsAddModalOpen(false)}
           onSubmit={handleCreateDashboard}
         />
@@ -373,8 +348,7 @@ const CustomDashboardPage = () => {
       {isViewModalOpen && selectedDashboard && (
         <ViewDashboardModal
           dashboard={selectedDashboard}
-          predefinedWidgets={predefinedWidgets}
-          customWidgets={customWidgets}
+          customWidgets={widgets}
           allUsers={users}
           onClose={() => {
             setIsViewModalOpen(false);

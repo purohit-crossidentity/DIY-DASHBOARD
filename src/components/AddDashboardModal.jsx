@@ -9,12 +9,11 @@
 import { useState } from 'react';
 import '../styles/AddDashboardModal.css';
 
-const AddDashboardModal = ({ predefinedWidgets, customWidgets, onClose, onSubmit }) => {
+const AddDashboardModal = ({ customWidgets, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
     dashboardName: '',
     dashboardDesc: '',
-    selectedPredefinedWidgets: [],
-    customWidgetIds: []
+    selectedWidgetIds: []
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,23 +28,13 @@ const AddDashboardModal = ({ predefinedWidgets, customWidgets, onClose, onSubmit
     }
   };
 
-  // Handle predefined widget toggle
-  const handlePredefinedWidgetToggle = (widgetName) => {
+  // Handle widget toggle
+  const handleWidgetToggle = (widgetId) => {
     setFormData(prev => ({
       ...prev,
-      selectedPredefinedWidgets: prev.selectedPredefinedWidgets.includes(widgetName)
-        ? prev.selectedPredefinedWidgets.filter(name => name !== widgetName)
-        : [...prev.selectedPredefinedWidgets, widgetName]
-    }));
-  };
-
-  // Handle custom widget toggle
-  const handleCustomWidgetToggle = (widgetId) => {
-    setFormData(prev => ({
-      ...prev,
-      customWidgetIds: prev.customWidgetIds.includes(widgetId)
-        ? prev.customWidgetIds.filter(id => id !== widgetId)
-        : [...prev.customWidgetIds, widgetId]
+      selectedWidgetIds: prev.selectedWidgetIds.includes(widgetId)
+        ? prev.selectedWidgetIds.filter(id => id !== widgetId)
+        : [...prev.selectedWidgetIds, widgetId]
     }));
   };
 
@@ -76,8 +65,7 @@ const AddDashboardModal = ({ predefinedWidgets, customWidgets, onClose, onSubmit
     const result = await onSubmit({
       dashboardName: formData.dashboardName.trim(),
       dashboardDesc: formData.dashboardDesc.trim(),
-      selectedPredefinedWidgets: formData.selectedPredefinedWidgets,
-      customWidgetIds: formData.customWidgetIds
+      widgetIds: formData.selectedWidgetIds
     });
 
     setIsSubmitting(false);
@@ -135,50 +123,27 @@ const AddDashboardModal = ({ predefinedWidgets, customWidgets, onClose, onSubmit
           <div className="form-group">
             <label>Choose widgets:</label>
             <div className="widget-list">
-              {predefinedWidgets.length === 0 && customWidgets.length === 0 ? (
-                <p className="no-widgets">No widgets available</p>
+              {customWidgets.length === 0 ? (
+                <p className="no-widgets">No widgets available. Please configure widgets in the Custom Widgets layer first.</p>
               ) : (
-                <>
-                  {/* Predefined Widgets */}
-                  {predefinedWidgets.map(widgetName => (
-                    <div
-                      key={widgetName}
-                      className={`widget-item ${formData.selectedPredefinedWidgets.includes(widgetName) ? 'selected' : ''}`}
-                      onClick={() => handlePredefinedWidgetToggle(widgetName)}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.selectedPredefinedWidgets.includes(widgetName)}
-                        onChange={() => {}}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handlePredefinedWidgetToggle(widgetName);
-                        }}
-                      />
-                      <span>{widgetName}</span>
-                    </div>
-                  ))}
-
-                  {/* Custom Widgets */}
-                  {customWidgets.map(widget => (
-                    <div
-                      key={`custom-${widget.id}`}
-                      className={`widget-item custom ${formData.customWidgetIds.includes(widget.id) ? 'selected' : ''}`}
-                      onClick={() => handleCustomWidgetToggle(widget.id)}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.customWidgetIds.includes(widget.id)}
-                        onChange={() => {}}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleCustomWidgetToggle(widget.id);
-                        }}
-                      />
-                      <span>{widget.widget_name} (Custom)</span>
-                    </div>
-                  ))}
-                </>
+                customWidgets.map(widget => (
+                  <div
+                    key={widget.id}
+                    className={`widget-item ${formData.selectedWidgetIds.includes(widget.id) ? 'selected' : ''}`}
+                    onClick={() => handleWidgetToggle(widget.id)}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.selectedWidgetIds.includes(widget.id)}
+                      onChange={() => {}}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleWidgetToggle(widget.id);
+                      }}
+                    />
+                    <span>{widget.widget_name}</span>
+                  </div>
+                ))
               )}
             </div>
           </div>
