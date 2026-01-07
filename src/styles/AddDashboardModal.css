@@ -310,6 +310,25 @@
   font-style: italic;
 }
 
+/* Select All Item */
+.widget-item.select-all-item {
+  background: rgba(204, 204, 255, 0.15);
+  border: 1px solid rgba(204, 204, 255, 0.3);
+  margin-bottom: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.widget-item.select-all-item:hover {
+  background: rgba(204, 204, 255, 0.25);
+}
+
+.widget-item .select-all-label {
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
 /* ===========================================
    MODAL ACTIONS - PILL BUTTONS
    =========================================== */

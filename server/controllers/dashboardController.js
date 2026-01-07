@@ -14,7 +14,10 @@ const dashboardController = {
   async getAllDashboards(req, res) {
     try {
       const { tenant, subtenant } = req.user;
+      console.log('DEBUG getAllDashboards - req.user:', req.user);
+      console.log('DEBUG getAllDashboards - tenant:', tenant, 'subtenant:', subtenant);
       const dashboards = await Dashboard.getAll(tenant, subtenant);
+      console.log('DEBUG getAllDashboards - returned rows:', dashboards.length);
 
       res.json({
         success: true,

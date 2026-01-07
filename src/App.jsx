@@ -8,6 +8,7 @@
 import { useState, useEffect } from 'react';
 import { initializeAuthFromURL } from './utils/auth';
 import CustomDashboardPage from './components/CustomDashboardPage';
+import ErrorPage from './components/ErrorPage';
 import './styles/App.css';
 
 function App() {
@@ -53,21 +54,6 @@ function App() {
   }
 
   if (authError) {
-    const getErrorTitle = () => {
-      switch (authError.type) {
-        case 'server_unavailable':
-          return 'Server Unavailable';
-        case 'network_error':
-          return 'Connection Error';
-        case 'missing_params':
-          return 'Authentication Required';
-        case 'auth_failed':
-          return 'Authentication Failed';
-        default:
-          return 'Error';
-      }
-    };
-
     const handleRetry = () => {
       setAuthError(null);
       setIsLoading(true);
@@ -75,22 +61,11 @@ function App() {
     };
 
     return (
-      <div className="app-error">
-        <h2 className={authError.type === 'server_unavailable' || authError.type === 'network_error' ? 'error-server' : ''}>
-          {getErrorTitle()}
-        </h2>
-        <p>{authError.message}</p>
-        {authError.type === 'missing_params' && (
-          <p className="hint">
-            Access URL format: <code>?tenant=CODE&subtenant=CODE</code>
-          </p>
-        )}
-        {(authError.type === 'server_unavailable' || authError.type === 'network_error') && (
-          <button className="retry-button" onClick={handleRetry}>
-            Retry Connection
-          </button>
-        )}
-      </div>
+      <ErrorPage
+        type={authError.type}
+        message={authError.message}
+        onRetry={handleRetry}
+      />
     );
   }
 

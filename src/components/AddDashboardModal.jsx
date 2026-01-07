@@ -38,6 +38,21 @@ const AddDashboardModal = ({ customWidgets, onClose, onSubmit }) => {
     }));
   };
 
+  // Handle select all widgets
+  const handleSelectAllWidgets = (e) => {
+    if (e.target.checked) {
+      setFormData(prev => ({
+        ...prev,
+        selectedWidgetIds: customWidgets.map(w => w.id)
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        selectedWidgetIds: []
+      }));
+    }
+  };
+
   // Validate form
   const validate = () => {
     const newErrors = {};
@@ -65,7 +80,7 @@ const AddDashboardModal = ({ customWidgets, onClose, onSubmit }) => {
     const result = await onSubmit({
       dashboardName: formData.dashboardName.trim(),
       dashboardDesc: formData.dashboardDesc.trim(),
-      widgetIds: formData.selectedWidgetIds
+      customWidgetIds: formData.selectedWidgetIds
     });
 
     setIsSubmitting(false);
@@ -126,7 +141,16 @@ const AddDashboardModal = ({ customWidgets, onClose, onSubmit }) => {
               {customWidgets.length === 0 ? (
                 <p className="no-widgets">No widgets available. Please configure widgets in the Custom Widgets layer first.</p>
               ) : (
-                customWidgets.map(widget => (
+                <>
+                  <div className="widget-item select-all-item">
+                    <input
+                      type="checkbox"
+                      checked={customWidgets.length > 0 && formData.selectedWidgetIds.length === customWidgets.length}
+                      onChange={handleSelectAllWidgets}
+                    />
+                    <span className="select-all-label">Select All</span>
+                  </div>
+                  {customWidgets.map(widget => (
                   <div
                     key={widget.id}
                     className={`widget-item ${formData.selectedWidgetIds.includes(widget.id) ? 'selected' : ''}`}
@@ -143,7 +167,8 @@ const AddDashboardModal = ({ customWidgets, onClose, onSubmit }) => {
                     />
                     <span>{widget.widget_name}</span>
                   </div>
-                ))
+                ))}
+                </>
               )}
             </div>
           </div>

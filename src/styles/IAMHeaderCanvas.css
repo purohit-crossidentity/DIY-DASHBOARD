@@ -13,7 +13,7 @@
 .iam-header {
   position: relative;
   width: 100%;
-  height: 140px;
+  height: 100px;
   overflow: hidden;
   border-radius: 16px;
   margin-bottom: 24px;
@@ -57,7 +57,7 @@
 }
 
 .iam-header-content h1 {
-  font-size: 38px;
+  font-size: 30px;
   font-weight: 800;
   background: linear-gradient(135deg, #1e293b 0%, #475569 50%, #1e293b 100%);
   -webkit-background-clip: text;
@@ -67,7 +67,7 @@
   letter-spacing: -0.5px;
   position: relative;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  padding-bottom: 8px;
+  padding-bottom: 6px;
 }
 
 .iam-header-content h1::after {
@@ -94,7 +94,7 @@
    =========================================== */
 @media (max-width: 768px) {
   .iam-header {
-    height: 120px;
+    height: 85px;
     border-radius: 10px;
     margin-bottom: 20px;
   }
@@ -104,8 +104,8 @@
   }
 
   .iam-header-content h1 {
-    font-size: 28px;
-    padding-bottom: 6px;
+    font-size: 24px;
+    padding-bottom: 5px;
   }
 
   .iam-header-content h1::after {
@@ -116,7 +116,7 @@
 
 @media (max-width: 480px) {
   .iam-header {
-    height: 100px;
+    height: 70px;
     border-radius: 8px;
     margin-bottom: 16px;
   }
@@ -126,8 +126,8 @@
   }
 
   .iam-header-content h1 {
-    font-size: 24px;
-    padding-bottom: 5px;
+    font-size: 20px;
+    padding-bottom: 4px;
   }
 
   .iam-header-content h1::after {

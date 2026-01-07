@@ -36,13 +36,17 @@ const Dashboard = {
    * Get all dashboards for tenant/subtenant
    */
   async getAll(tenant, subtenant) {
+    console.log('DEBUG Dashboard.getAll - tenant:', tenant, 'type:', typeof tenant);
+    console.log('DEBUG Dashboard.getAll - subtenant:', subtenant, 'type:', typeof subtenant);
     const query = `
       SELECT id, dashboard_name, dashboard_desc, widget_cfg
       FROM idx2_dashboard
       WHERE tenant = ? AND subtenant = ?
       ORDER BY id DESC
     `;
+    console.log('DEBUG Dashboard.getAll - executing query with params:', [tenant, subtenant]);
     const [rows] = await pool.execute(query, [tenant, subtenant]);
+    console.log('DEBUG Dashboard.getAll - query returned:', rows.length, 'rows');
     return rows;
   },
 

@@ -77,6 +77,21 @@ const ViewDashboardModal = ({ dashboard, customWidgets, allUsers, onClose, onUpd
     }));
   };
 
+  // Handle select all widgets
+  const handleSelectAllWidgets = (e) => {
+    if (e.target.checked) {
+      setFormData(prev => ({
+        ...prev,
+        selectedWidgetIds: customWidgets.map(w => w.id)
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        selectedWidgetIds: []
+      }));
+    }
+  };
+
   // Access tab handlers
   const handleAddUser = (user) => {
     // Check if user already exists
@@ -142,7 +157,7 @@ const ViewDashboardModal = ({ dashboard, customWidgets, allUsers, onClose, onUpd
     const result = await onUpdate(dashboard.id, {
       dashboardName: formData.dashboardName.trim(),
       dashboardDesc: formData.dashboardDesc.trim(),
-      widgetIds: formData.selectedWidgetIds,
+      customWidgetIds: formData.selectedWidgetIds,
       users: formData.users.map(u => u.userId)
     });
 
@@ -190,7 +205,14 @@ const ViewDashboardModal = ({ dashboard, customWidgets, allUsers, onClose, onUpd
         <table className="widgets-table">
           <thead>
             <tr>
-              <th>#</th>
+              <th>
+                <input
+                  type="checkbox"
+                  checked={customWidgets.length > 0 && formData.selectedWidgetIds.length === customWidgets.length}
+                  onChange={handleSelectAllWidgets}
+                  title="Select All"
+                />
+              </th>
               <th>Widget</th>
             </tr>
           </thead>

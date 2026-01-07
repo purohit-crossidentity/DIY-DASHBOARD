@@ -44,7 +44,9 @@ const authController = {
         });
       }
 
+      console.log('DEBUG tenantRows[0]:', JSON.stringify(tenantRows[0]));
       const tenantId = tenantRows[0].id;
+      console.log('DEBUG tenantId value:', tenantId, 'type:', typeof tenantId);
 
       // Look up subtenant ID from subtenant_id code
       const [subtenantRows] = await pool.query(
@@ -61,16 +63,20 @@ const authController = {
 
       const subtenantId = subtenantRows[0].id;
 
-      console.log(`Mapped: tenant '${tenant}' -> ID ${tenantId}, subtenant '${subtenant}' -> ID ${subtenantId}`);
+      console.log(`Mapped: tenant '${tenant}' -> ID ${tenantId} (type: ${typeof tenantId}), subtenant '${subtenant}' -> ID ${subtenantId} (type: ${typeof subtenantId})`);
+
+      // Debug: Show what we're putting in the JWT
+      const jwtPayload = {
+        tenant: tenantId,
+        subtenant: subtenantId,
+        tenantCode: tenant,
+        subtenantCode: subtenant
+      };
+      console.log('DEBUG JWT Payload:', JSON.stringify(jwtPayload));
 
       // Generate JWT token with tenant/subtenant context
       const token = jwt.sign(
-        {
-          tenant: tenantId,
-          subtenant: subtenantId,
-          tenantCode: tenant,
-          subtenantCode: subtenant
-        },
+        jwtPayload,
         JWT_SECRET,
         { expiresIn: JWT_EXPIRES_IN }
       );
