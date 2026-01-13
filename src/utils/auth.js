@@ -4,7 +4,7 @@
  * Handles JWT token generation and management for multi-tenant authentication.
  */
 
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = '/api';
 
 // Mutex to prevent multiple simultaneous token refreshes
 let refreshPromise = null;

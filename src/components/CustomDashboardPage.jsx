@@ -12,7 +12,7 @@ import ViewDashboardModal from './ViewDashboardModal';
 import IAMHeaderCanvas from './IAMHeaderCanvas';
 import '../styles/CustomDashboardPage.css';
 
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = '/api';
 
 const CustomDashboardPage = () => {
   const [dashboards, setDashboards] = useState([]);

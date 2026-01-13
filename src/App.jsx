@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { initializeAuthFromURL } from './utils/auth';
 import CustomDashboardPage from './components/CustomDashboardPage';
 import ErrorPage from './components/ErrorPage';
+import ThemeToggle from './components/ThemeToggle';
 import './styles/App.css';
 
 function App() {
@@ -84,6 +85,7 @@ function App() {
         <span></span>
         <span></span>
       </div>
+      <ThemeToggle />
       {isAuthenticated && <CustomDashboardPage />}
     </div>
   );
