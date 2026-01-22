@@ -278,3 +278,263 @@
 [data-theme="dark"] .react-resizable-handle-sw::after {
   border-color: var(--text-muted) !important;
 }
+
+/* Add User Modal - Dark Mode */
+[data-theme="dark"] .add-user-modal-overlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .add-user-modal {
+  background: #1e1e3f;
+  border: 1px solid var(--glass-border);
+}
+
+[data-theme="dark"] .add-user-modal-header {
+  background: linear-gradient(135deg, #4a4a8a 0%, #5a5a9a 50%, #3a3a7a 100%);
+}
+
+[data-theme="dark"] .add-user-modal-tabs {
+  background: #252550;
+  border-bottom-color: var(--glass-border);
+}
+
+[data-theme="dark"] .add-user-tab {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .add-user-tab:hover {
+  color: var(--primary-light);
+  background: rgba(139, 139, 255, 0.1);
+}
+
+[data-theme="dark"] .add-user-tab.active {
+  color: var(--primary-light);
+  border-bottom-color: var(--primary-light);
+  background: rgba(139, 139, 255, 0.15);
+}
+
+[data-theme="dark"] .add-user-modal-search {
+  background: #1e1e3f;
+  border-bottom-color: var(--glass-border);
+}
+
+[data-theme="dark"] .add-user-modal-search input {
+  background: #252550;
+  border-color: var(--glass-border);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .add-user-modal-search input::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .add-user-modal-search input:focus {
+  background: #2d2d5a;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(139, 139, 255, 0.15);
+}
+
+[data-theme="dark"] .add-user-modal-list {
+  background: #1e1e3f;
+}
+
+[data-theme="dark"] .add-user-modal-list .no-users-available {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .add-user-modal-list .user-item {
+  border-bottom-color: var(--glass-border);
+}
+
+[data-theme="dark"] .add-user-modal-list .user-item:hover {
+  background: #252550;
+}
+
+[data-theme="dark"] .add-user-modal-list .user-item.selected {
+  background: rgba(139, 139, 255, 0.2);
+}
+
+[data-theme="dark"] .add-user-modal-list .user-item .user-name {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .add-user-modal-list .user-item .user-profile {
+  background: rgba(139, 139, 255, 0.25);
+  color: var(--primary-light);
+}
+
+[data-theme="dark"] .add-user-modal-list .user-item .item-type-badge {
+  background: #22c55e;
+}
+
+[data-theme="dark"] .add-user-modal-list .user-item .item-type-badge.profile {
+  background: #8b5cf6;
+}
+
+[data-theme="dark"] .add-user-modal-actions {
+  background: #252550;
+  border-top-color: var(--glass-border);
+}
+
+[data-theme="dark"] .add-user-modal-actions .btn-cancel {
+  background: #1e1e3f;
+  border: 1px solid var(--glass-border);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .add-user-modal-actions .btn-cancel:hover {
+  background: #2d2d5a;
+}
+
+[data-theme="dark"] .add-user-modal-actions .btn-add {
+  background: linear-gradient(135deg, #8b8bff 0%, #7a7aee 100%);
+}
+
+[data-theme="dark"] .add-user-modal-actions .btn-add:disabled {
+  background: #3d3d7a;
+  color: var(--text-muted);
+}
+
+/* Role Type Badge - Dark Mode */
+[data-theme="dark"] .add-user-modal-list .user-item .role-type-badge.static {
+  background: #059669;
+}
+
+[data-theme="dark"] .add-user-modal-list .user-item .role-type-badge.dynamic {
+  background: #d97706;
+}
+
+[data-theme="dark"] .add-user-modal-list .user-item .role-member-count {
+  color: var(--text-muted);
+}
+
+/* ===========================================
+   ACCESS TAB - RULES TABLE & TOOLBAR - DARK MODE
+   =========================================== */
+[data-theme="dark"] .access-toolbar .filter-dropdown-btn {
+  background: rgba(30, 30, 60, 0.8);
+  border-color: var(--glass-border);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .access-toolbar .filter-dropdown-btn:hover {
+  background: rgba(45, 45, 90, 0.9);
+  border-color: #8b8bff;
+}
+
+[data-theme="dark"] .access-toolbar .filter-dropdown-menu {
+  background: #1e1e3f;
+  border-color: var(--glass-border);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .access-toolbar .filter-option {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .access-toolbar .filter-option:hover {
+  background: rgba(139, 139, 255, 0.15);
+}
+
+[data-theme="dark"] .access-toolbar .search-bar input {
+  background: rgba(30, 30, 60, 0.8);
+  border-color: var(--glass-border);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .access-toolbar .search-bar input:focus {
+  background: rgba(45, 45, 90, 0.9);
+  border-color: #8b8bff;
+}
+
+[data-theme="dark"] .access-toolbar .search-bar input::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .rules-table {
+  background: rgba(30, 30, 60, 0.6);
+  border-color: var(--glass-border);
+}
+
+[data-theme="dark"] .rules-table thead {
+  background: linear-gradient(135deg, #6a6aff 0%, #5a5aee 100%);
+}
+
+[data-theme="dark"] .rules-table td {
+  border-bottom-color: var(--glass-border);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .rules-table tbody tr:hover {
+  background: rgba(139, 139, 255, 0.1);
+}
+
+[data-theme="dark"] .rules-table tbody tr.selected {
+  background: rgba(139, 139, 255, 0.2);
+}
+
+[data-theme="dark"] .rules-table .no-data {
+  color: var(--text-muted);
+}
+
+/* Rule Type Badge - Dark Mode */
+[data-theme="dark"] .rule-type-badge.user {
+  background: rgba(16, 185, 129, 0.25);
+  color: #34d399;
+}
+
+[data-theme="dark"] .rule-type-badge.profile {
+  background: rgba(139, 92, 246, 0.25);
+  color: #a78bfa;
+}
+
+[data-theme="dark"] .rule-type-badge.role {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+}
+
+/* Add/Delete Rule Buttons - Dark Mode */
+[data-theme="dark"] .btn-add-rule {
+  background: linear-gradient(135deg, #8b8bff 0%, #7a7aee 100%);
+}
+
+[data-theme="dark"] .btn-delete-rule:disabled {
+  background: #3d3d7a;
+  color: var(--text-muted);
+}
+
+/* Clickable Rules (Profile/Role) - Dark Mode */
+[data-theme="dark"] .rules-table tbody tr.clickable-rule:hover {
+  background: rgba(139, 139, 255, 0.2);
+}
+
+[data-theme="dark"] .view-users-hint {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .rules-table tbody tr.clickable-rule:hover .view-users-hint {
+  color: #a78bfa;
+}
+
+/* Rule Users Popup - Dark Mode */
+[data-theme="dark"] .rule-users-popup {
+  background: #1e1e3f;
+}
+
+[data-theme="dark"] .rule-users-popup .add-user-modal-header .rule-type-badge {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .rule-users-info {
+  background: rgba(139, 139, 255, 0.1);
+  color: var(--text-muted);
+  border-bottom-color: var(--glass-border);
+}
+
+[data-theme="dark"] .rule-users-list .user-item {
+  border-bottom-color: var(--glass-border);
+}
+
+[data-theme="dark"] .rule-users-list .user-item:hover {
+  background: rgba(139, 139, 255, 0.08);
+}

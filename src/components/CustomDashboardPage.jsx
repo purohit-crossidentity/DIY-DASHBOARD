@@ -18,6 +18,7 @@ const CustomDashboardPage = () => {
   const [dashboards, setDashboards] = useState([]);
   const [widgets, setWidgets] = useState([]);
   const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [selectedDashboards, setSelectedDashboards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -102,6 +103,28 @@ const CustomDashboardPage = () => {
     }
   }, []);
 
+  // Fetch roles
+  const fetchRoles = useCallback(async () => {
+    try {
+      const token = await getValidAuthToken();
+      const response = await fetch(`${API_BASE_URL}/roles`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          setRoles(result.data);
+        }
+      }
+    } catch (err) {
+      console.error('Error fetching roles:', err);
+    }
+  }, []);
+
   // Load all data on mount
   useEffect(() => {
     let isMounted = true;
@@ -113,7 +136,8 @@ const CustomDashboardPage = () => {
       await Promise.all([
         fetchDashboards(),
         fetchWidgets(),
-        fetchUsers()
+        fetchUsers(),
+        fetchRoles()
       ]);
     };
 
@@ -350,6 +374,7 @@ const CustomDashboardPage = () => {
           dashboard={selectedDashboard}
           customWidgets={widgets}
           allUsers={users}
+          allRoles={roles}
           onClose={() => {
             setIsViewModalOpen(false);
             setSelectedDashboard(null);

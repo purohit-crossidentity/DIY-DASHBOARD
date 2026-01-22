@@ -6,7 +6,7 @@
  * - Predefined widgets selection
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/AddDashboardModal.css';
 
 const AddDashboardModal = ({ customWidgets, onClose, onSubmit }) => {
@@ -15,6 +15,16 @@ const AddDashboardModal = ({ customWidgets, onClose, onSubmit }) => {
     dashboardDesc: '',
     selectedWidgetIds: []
   });
+
+  // Auto-select all widgets (30 defaults) when modal opens
+  useEffect(() => {
+    if (customWidgets && customWidgets.length > 0) {
+      setFormData(prev => ({
+        ...prev,
+        selectedWidgetIds: customWidgets.map(w => w.id)
+      }));
+    }
+  }, [customWidgets]);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
